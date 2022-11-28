@@ -33,6 +33,7 @@ justify-content: center;
 `
 const Title =styled.h1`
 margin-bottom: 20px;
+color: white;
 `
 const Button =styled.button`
 border:none;
@@ -45,7 +46,7 @@ color: gray;
 const CategoryItem = ({item}) => {
   return (
 <Container>
-<Image src=' {item.img}'/>
+<Image src= {item.img}/>
 <Info>
     <Title>{item.title}</Title>
 <Button>Shop Now</Button>
