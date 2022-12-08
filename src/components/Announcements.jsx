@@ -19,7 +19,7 @@ font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans
 const Announcements = () => {
   return (
     <Container>
-        This is my test site.
+        Super Deal! Free Shipping on Orders Over $50
     </Container>
   )
 }
