@@ -1,6 +1,8 @@
+import { useEffect ,useState} from 'react';
 import styled from 'styled-components';
 import { popularProducts } from '../data'
 import Product from './Product'
+import axios from "axios"
 
 const Container=styled.div`
     padding:20px;
@@ -8,9 +10,25 @@ const Container=styled.div`
     flex-wrap: wrap;
     justify-content: space-between;
 `;
+           
 
+const Products = ({cat,filters,sort}) => {
 
-const Products = () => {
+const [products, setProducts]=useState([]);
+const [filteredProducts, setfilteredProducts]=useState([]);
+
+useEffect(()=>{
+ const getProducts = async ()=>{
+  try{
+const res = await axios.get(cat? `http://localhost:8080/products/find?category=${cat}`: `http://localhost:8080/products/find`  );
+console.log (res);
+  }catch(err){
+
+  }
+}
+
+},[cat])
+
   return (
     <Container>
 {
