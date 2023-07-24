@@ -1,42 +1,65 @@
-import { useEffect ,useState} from 'react';
-import styled from 'styled-components';
-import { popularProducts } from '../data'
+import { useEffect, useState } from 'react'
+import styled from 'styled-components'
+import { publicRequest } from '../pages/requestMethods'
 import Product from './Product'
-import axios from "axios"
+const Container = styled.div`
+	padding: 20px;
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: space-between;
+`
 
-const Container=styled.div`
-    padding:20px;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
-`;
-           
+const Products = ({ cat, filters, sort }) => {
+	const [products, setProducts] = useState([])
+	const [filteredProducts, setfilteredProducts] = useState([])
 
-const Products = ({cat,filters,sort}) => {
+	useEffect(() => {
+		const getProducts = async () => {
+			try {
+				const res = await publicRequest.get(
+					// for category based get request
+					cat ? `/products/find?category=${cat}` : `/products/find`
+				)
 
-const [products, setProducts]=useState([]);
-const [filteredProducts, setfilteredProducts]=useState([]);
+				setProducts(res.data)
+			} catch (err) {
+				console.log(err)
+			}
+		}
+		getProducts()
+	}, [cat])
 
-useEffect(()=>{
- const getProducts = async ()=>{
-  try{
-const res = await axios.get(cat? `http://localhost:8080/products/find?category=${cat}`: `http://localhost:8080/products/find`  );
-console.log (res);
-  }catch(err){
+	useEffect(() => {
+		cat &&
+			setfilteredProducts(
+				products.filter((item) => {
+					Object.entries(filters).every(([key, value]) =>
+						item[key].includes(value)
+					)
+				})
+			)
+	}, [products, cat, filters])
 
-  }
-}
-
-},[cat])
-
-  return (
-    <Container>
-{
-    popularProducts.map((item)=>(
-        <Product item={item} key={item.id}/>
-    ))}
-    </Container>
-  )
+	useEffect(() => {
+		if (sort === 'newest') {
+			setfilteredProducts((prev) =>
+				[...prev].sort((a, b) => a.createdAt - b.createdAt)
+			)
+		} else if (sort === 'asc') {
+			setfilteredProducts((prev) => [...prev].sort((a, b) => a.price - b.price))
+		} else {
+			setfilteredProducts((prev) => [...prev].sort((a, b) => b.price - a.price))
+		}
+	}, [sort])
+	return (
+		<Container>
+			{cat
+				? filteredProducts.map((item) => <Product item={item} key={item.id} />)
+				: products
+						.slice(0, 8)
+						.map((item, index) => <Product item={item} key={index} />)}
+		</Container>
+	)
 }
 
 export default Products
