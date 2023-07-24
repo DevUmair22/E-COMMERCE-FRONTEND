@@ -65,16 +65,19 @@ const Icon = styled.div`
 	}
 `
 const Product = ({ item }) => {
+	console.log('item', item)
+
 	return (
 		<Container>
 			<Circle />
-			<Image src={item.img} key={item.id} />
+			{/* <Image src={item.img} /> */}
+			<Image src={item.img} />
 			<Info>
 				<Icon>
 					<ShoppingCartOutlined />
 				</Icon>
 				<Icon>
-					<Link to={`/products/${item._id}`}>
+					<Link to={`/product/${item._id}`}>
 						{' '}
 						<SearchOutlined />
 					</Link>

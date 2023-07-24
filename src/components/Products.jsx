@@ -1,8 +1,7 @@
-import axios from 'axios'
 import { useEffect, useState } from 'react'
 import styled from 'styled-components'
+import { publicRequest } from '../pages/requestMethods'
 import Product from './Product'
-
 const Container = styled.div`
 	padding: 20px;
 	display: flex;
@@ -17,12 +16,11 @@ const Products = ({ cat, filters, sort }) => {
 	useEffect(() => {
 		const getProducts = async () => {
 			try {
-				const res = await axios.get(
+				const res = await publicRequest.get(
 					// for category based get request
-					cat
-						? `http://localhost:8080/products/find?category=${cat}`
-						: `http://localhost:8080/products/find`
+					cat ? `/products/find?category=${cat}` : `/products/find`
 				)
+
 				setProducts(res.data)
 			} catch (err) {
 				console.log(err)
@@ -59,7 +57,7 @@ const Products = ({ cat, filters, sort }) => {
 				? filteredProducts.map((item) => <Product item={item} key={item.id} />)
 				: products
 						.slice(0, 8)
-						.map((item) => <Product item={item} key={item.id} />)}
+						.map((item, index) => <Product item={item} key={index} />)}
 		</Container>
 	)
 }

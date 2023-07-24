@@ -1,12 +1,13 @@
 import { Add, Remove } from '@mui/icons-material'
-import React, { useEffect, useLocation, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useDispatch } from 'react-redux'
+import { useLocation } from 'react-router-dom'
 import styled from 'styled-components'
 import Announcements from '../components/Announcements'
 import Footer from '../components/Footer'
 import Navbar from '../components/Navbar'
 import Newsletter from '../components/Newsletter'
-// import { addProduct } from '../redux/cartRedux'
+import { addProduct } from '../redux/cartRedux'
 import { mobile } from '../responsive'
 import { publicRequest } from './requestMethods'
 
@@ -149,7 +150,7 @@ const Product = () => {
 		}
 	}
 	const handleClick = () => {
-		// dispatch(addProduct({ ...product, quantity, color, size }))
+		dispatch(addProduct({ ...product, quantity, color, size }))
 	}
 
 	return (
@@ -158,7 +159,7 @@ const Product = () => {
 			<Announcements />
 			<Wrapper>
 				<ImgContainer>
-					<Image src="https://i.ibb.co/S6qMxwr/jean.jpg" />
+					<Image src={product.img} />
 				</ImgContainer>
 				<InfoContainer>
 					<Title>{product.title}</Title>
@@ -175,7 +176,7 @@ const Product = () => {
 							<FilterTitle>Size</FilterTitle>
 							<FilterSize onChange={(e) => setSize(e.target.value)}>
 								{product.size?.map((size) => (
-									<FilterSizeOption>{size}</FilterSizeOption>
+									<FilterSizeOption key={size}>{size}</FilterSizeOption>
 								))}
 							</FilterSize>
 						</Filter>
