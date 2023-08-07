@@ -86,8 +86,14 @@ const Navbar = () => {
 					<Logo>Thrifted.</Logo>
 				</Center>
 				<Right>
-					<MenuItem>Register</MenuItem>
-					<MenuItem>Sign in</MenuItem>
+					{' '}
+					<MenuItem>
+						<Link to="/register">Register</Link>
+					</MenuItem>
+					<Link to="/login">
+						{' '}
+						<MenuItem>Sign in</MenuItem>
+					</Link>
 					<Link to="/cart">
 						<MenuItem>
 							<Badge badgeContent={quantity} color="primary">

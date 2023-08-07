@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { useLocation } from 'react-router-dom'
+import { useLocation } from 'react-router'
 import styled from 'styled-components'
 import Announcements from '../components/Announcements'
 import Footer from '../components/Footer'
@@ -58,8 +58,8 @@ const ProductList = () => {
 					<FilterText>Filter Products:</FilterText>
 					<Select name="color" onChange={handleFilters}>
 						<Option disabled>Color</Option>
-						<Option>red</Option>
-						<Option>black</Option>
+						<Option>Red</Option>
+						<Option>Black</Option>
 						<Option>brown</Option>
 						<Option>violet</Option>
 						<Option>orange</Option>

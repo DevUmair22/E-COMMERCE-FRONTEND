@@ -12,13 +12,13 @@ const Container = styled.div`
 const Products = ({ cat, filters, sort }) => {
 	const [products, setProducts] = useState([])
 	const [filteredProducts, setfilteredProducts] = useState([])
-
+	console.log('I am looking for you', cat)
 	useEffect(() => {
 		const getProducts = async () => {
 			try {
 				const res = await publicRequest.get(
 					// for category based get request
-					cat ? `/products/find?category=${cat}` : `/products/find`
+					cat ? `/products?categories=${cat}` : `/products/`
 				)
 
 				setProducts(res.data)
@@ -38,6 +38,7 @@ const Products = ({ cat, filters, sort }) => {
 					)
 				})
 			)
+		console.log('filtered ', filteredProducts, products)
 	}, [products, cat, filters])
 
 	useEffect(() => {
